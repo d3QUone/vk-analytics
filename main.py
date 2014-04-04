@@ -43,6 +43,8 @@ def main():
                 try:
                     l = 'vk.com/'+p+'?w=wall'+str(ret['response'][j]['from_id']) + '_' + str(ret['response'][j]['id'])
                     output.append({'link': l, 'comm': ret['response'][j]['comments']['count'], 'like': ret['response'][j]['likes']['count'], 'repo': ret['response'][j]['reposts']['count']})
+                except:
+                    pass
                 glob += 1
 
         a = [[o['like'], o['link'], o['comm'], o['repo']] for o in output] #sort by likes
