@@ -28,7 +28,6 @@ def main():
         steps = ret['response'][0]/100 + 1
 
         output = []
-
         i = 0
         j = sss = 1
         end = 100
@@ -85,11 +84,8 @@ def parse(st):
 
 
 def getA(dom, off=0, cou=100):
-    r_response = {}
-    link = 'https://api.vk.com/method/wall.get?domain=' + dom + '&offset=' + str(off) +'&count=' + str(cou) 
-    response = urllib.urlopen(link)
-    r_response = json.load(response)
-    return r_response
+    response = urllib.urlopen('https://api.vk.com/method/wall.get?domain=' + dom + '&offset=' + str(off) +'&count=' + str(cou))
+    return json.load(response)
                               
 
 main()
