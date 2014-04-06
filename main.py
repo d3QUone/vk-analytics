@@ -39,15 +39,14 @@ def main():
                 except:
                     pass
 
-        a = [[o['like'], o['link'], o['comm'], o['repo']] for o in output] #sort by likes
-        a.sort(reverse=True)
+        output.sort(key=lambda x: x['like'], reverse=True) #sort by key 
 
         g = open(p + '.txt', 'a')
-        for i in range(0, len(a)):
-            g.write('like='+ str(a[i][0])+' comm='+str(a[i][2])+' repo='+str(a[i][3])+'; link: '+a[i][1]+'\n')
-        g.close
+        for item in output:
+            g.write('like=' + str(item['like']) + ' comm='+str(item['comm'])+' repo='+str(item['repo'])+'; link: ' + item['link'] + '\n')
+        g.close()
         
-        print '-------------------------------------------\n'
+        print '-'*40 + '\n'
         inp = f.readline()
 
     f.close
