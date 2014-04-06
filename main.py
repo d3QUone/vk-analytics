@@ -1,13 +1,7 @@
 import urllib
 import json
-from datetime import datetime
 
 def main():
-    t = datetime.now()
-    stat = open('stat.txt', 'w')
-    stat.write('t0 = ' + str(t))
-    glob = 0
-
     try:
         f = open('_input.txt', 'r')
     except:
@@ -44,7 +38,6 @@ def main():
                     output.append({'link': l, 'comm': ret['response'][j]['comments']['count'], 'like': ret['response'][j]['likes']['count'], 'repo': ret['response'][j]['reposts']['count']})
                 except:
                     pass
-                glob += 1
 
         a = [[o['like'], o['link'], o['comm'], o['repo']] for o in output] #sort by likes
         a.sort(reverse=True)
@@ -59,11 +52,7 @@ def main():
 
     f.close
     print '\nDone.'
-
-    t = datetime.now()
-    stat.write('\nt1 = ' + str(t) + '\n\ntotal posts = ' + str(glob))
-    stat.close
-
+    
 
 def parse(st):
     i = start = 0
@@ -76,16 +65,14 @@ def parse(st):
             start = 2
         elif start == 2: 
             out += st[i]
-
     end = len(out)-1
     if out[end] == '\n':
         out = out[:end]
     return out
-
+    
 
 def getA(dom, off=0, cou=100):
     response = urllib.urlopen('https://api.vk.com/method/wall.get?domain=' + dom + '&offset=' + str(off) +'&count=' + str(cou))
     return json.load(response)
                               
-
 main()
