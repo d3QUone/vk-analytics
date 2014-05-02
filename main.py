@@ -11,8 +11,12 @@ def main():
     inp = f.readline()
     while inp != '':
         p = parse(inp)
-        g = open(p + '.txt', 'w')
-        g.close
+        g = open(p + '.html', 'w')
+        g.write('<!doctype html>\n<html>\n<head>\n<meta charset="utf-8">\n<title>'+p+\
+                '</title>\n</head>\n<body>\n'+\
+                '<h3 align="center"><a href="'+inp+'" target="_blank">'+p+'</a></h3>'+\
+                '<table width="50%" border="1" align="center"><tr align="center">'+\
+                '<td width="15%">likes</td><td width="15%">reposts</td><td width="15%">comm</td><td>link</td></tr>')
         print 'group = ' + p
 
         ret = getA(p, 0, 1)        
@@ -43,10 +47,14 @@ def main():
 
         g = open(p + '.txt', 'a')
         for item in output:
-            g.write('like=' + str(item['like']) + ' comm='+str(item['comm'])+' repo='+str(item['repo'])+'; link: ' + item['link'] + '\n')
+            g.write('\n<tr align="center">\n<td>'+ str(a[i][0]) +\
+                    '</td>\n<td>'+str(a[i][2])+\
+                    '</td>\n<td>'+str(a[i][3])+\
+                    '</td>\n<td><a href="https://'+a[i][1]+\
+                    '" target="_blank">Check it' +\
+                    '</a></td>\n</tr>')            
+        g.write('</table>\n<br><div align="center"><a href="https://github.com/d3QUone/vk-analytics2" target="_blank">Follow me on GitHub!</a></div><br>\n</body>\n</html>')
         g.close()
-        
-        print '-'*40 + '\n'
         inp = f.readline()
 
     f.close
