@@ -16,7 +16,7 @@ def main():
                 '</title>\n</head>\n<body>\n'+\
                 '<h3 align="center"><a href="'+inp+'" target="_blank">'+p+'</a></h3>'+\
                 '<table width="50%" border="1" align="center"><tr align="center">'+\
-                '<td width="15%">likes</td><td width="15%">reposts</td><td width="15%">comm</td><td>link</td></tr>')
+                '<td width="15%">likes</td><td width="15%">comm</td><td width="15%">reposts</td><td>link</td></tr>')
         print 'group = ' + p
 
         ret = getA(p, 0, 1)        
