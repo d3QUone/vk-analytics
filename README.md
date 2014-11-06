@@ -1,4 +1,4 @@
-vk-analytics2
+vk.com analytics2 python script
 =============
 
-analyse all posts in group, sort by like, out in file
+analyze all posts in groups, sort by likes (or reposts or comments), output HTML files 
