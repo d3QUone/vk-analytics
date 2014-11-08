@@ -20,7 +20,7 @@ def main():
     while inp != '':
         # prepare template
         p = parse(inp) #group link
-        g = open(p + '.html', 'w')
+        g = open('output/' + p + '.html', 'w')
         g.write('<!doctype html>\n<html>\n<head>\n<meta charset="utf-8">\n<title>'+p+\
                 '</title>\n</head>\n<body>\n'+\
                 '<h3 align="center"><a href="'+inp+'" target="_blank">'+p+'</a></h3>'+\
@@ -57,7 +57,7 @@ def main():
         a.sort(reverse=True)
 
         # the result representing
-        g = open(p + '.html', 'a')
+        g = open('output/' + p + '.html', 'a')
         for i in range(0, len(a)):
             g.write('\n<tr align="center">\n<td>'+ str(a[i][0]) +\
                     '</td>\n<td>'+str(a[i][2])+\
