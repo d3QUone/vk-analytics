@@ -1,4 +1,3 @@
-vk.com analytics2 python script
-=============
+<b>vk-analytics2</b> is a python script to analyze all posts in groups, sort by likes (or reposts, comments), output styled HTML files 
 
-analyze all posts in groups, sort by likes (or reposts or comments), output HTML files 
+vk.com account is required
