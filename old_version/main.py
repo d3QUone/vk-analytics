@@ -59,6 +59,7 @@ def getA(posts):
     }
     r = requests.get("https://api.vk.com/method/wall.getById", params=params)
     return r.json()
-                              
 
-main()
+                         
+if __name__ == "__main__":
+    main()
