@@ -1,37 +1,39 @@
-import urllib, json, sys
+import sys
 from datetime import datetime
+import requests
 
 def main():
     t = datetime.now()
     try:
-        f = open('input.txt', 'r')
+        f = open("input.txt", "r")
         inp = f.readline()
-        f.close()
-    except:
+    except IOError:
         print "No input file"
-        sys.exit(2)
+        sys.exit()
     
     i = 0    
-    while inp != '':
-        out = 'L' + str(i) + ' '
+    while inp != "":
         ret = getA(parse(inp)) 
         try:
-            out += datetime.fromtimestamp(ret['response'][0]['date']).strftime('%Y-%m-%d %H:%M:%S')
-            out += ': comm='+str(ret['response'][0]['comments']['count'])
-            out += ', like='+str(ret['response'][0]['likes']['count'])
-            out += ', reps='+str(ret['response'][0]['reposts']['count'])
-        except:
-            out += 'Post was deleted'
+            out = "L{0} {1}: comm={2}, like={3}, reps={4}\n".format(
+                    i, 
+                    datetime.fromtimestamp(ret["response"][0]["date"]).strftime("%Y-%m-%d %H:%M:%S"),
+                    ret["response"][0]["comments"]["count"],
+                    ret["response"][0]["likes"]["count"],
+                    ret["response"][0]["reposts"]["count"]
+                )
+        except IndexError:
+            out = "Post was deleted\n"
         try:
             g = open('out.txt', 'a')
-        except:
+        except IOError:
             g = open('out.txt', 'w')
-        g.write(out + '\n')
+        g.write(out)
         g.close()
         inp = f.readline()
         i += 1
-
-    print '\nDone\nprocessing time', datetime.now() - t, "; total processed", i+1, "links"
+    f.close()
+    print "Done\nProcessing time {0}; total processed {1} links".format(datetime.now() - t, i + 1)
 
 
 # parse post id 
@@ -50,11 +52,13 @@ def parse(st):
 
 
 # send request
-def getA(ids):
-    link = 'https://api.vk.com/method/wall.getById?posts=' + ids
-    response = urllib.urlopen(link)
-    r_response = json.load(response)
-    return r_response
+def getA(posts):
+    params = {
+        "posts": posts,
+        "v": "5.26"
+    }
+    r = requests.get("https://api.vk.com/method/wall.getById", params=params)
+    return r.json()
                               
 
 main()

@@ -54,7 +54,7 @@ def main():
                 glob += 1
 
         # sort by likes 
-        a.sort(reverse=True)
+        output.sort(reverse=True)
 
         # the result representing
         g = open('output/{0}.html'.format(p), 'a')
