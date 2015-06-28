@@ -1,7 +1,9 @@
 # -*- coding: cp1251 -*-
-import urllib
-import json
+import sys
 from datetime import datetime
+import requests
+
+FILENAME = "_input.txt"
 
 def main():
     # for stats
@@ -12,9 +14,9 @@ def main():
     # check input
     try:
         f = open('_input.txt', 'r')
-    except:
+    except IOError:
         print 'No _input.txt file'
-        quit()
+        sys.exit()
 
     inp = f.readline()
     while inp != '':
@@ -30,14 +32,14 @@ def main():
         groupNum += 1
 
         # prepare and tryout 
-        ret = getA(p, 0, 1)
+        ret = getInfo(p, 0, 1)
         count = ret['response']['count']
-        print 'num to parse:{0}\n'.format(count)
+        print 'num to parse: {0}\n'.format(count)
         offset = count//100 + 1
         output = []
         append = output.append
         for i in range(0, offset):
-            posts = getA(p, i*100, 100)
+            posts = getInfo(p, i*100, 100)
             for post in posts['response']['items']:
                 #print post, '\n'
                 try:
@@ -62,10 +64,10 @@ def main():
                     '</a></td>\n</tr>'.format(a[i][0], a[i][2], a[i][3], a[i][1]))            
         g.write('</table>\n<br><div align="center"><a href="https://github.com/d3QUone/vk-analytics2" '+\
                 'target="_blank">Follow me on GitHub!</a></div><br>\n</body>\n</html>')
-        g.close
+        g.close()
         inp = f.readline()
         
-    f.close
+    f.close()
     t = datetime.now() - t
     print '\nDone.'
     print '\nWorked = {0}\n\ntotal posts = {1}'.format(t, glob)
@@ -91,9 +93,16 @@ def parse(st):
     return out
 
 
-def getA(dom, off=0, cou=100):
-    response = urllib.urlopen('https://api.vk.com/method/wall.get?domain={0}&offset={1}&count={2}&v=5.26'.format(dom, off, cou))
-    return json.load(response)
+def getInfo(domain, offset=0, count=100):
+    params = {
+        "domain": domain,
+        "offset": offset,
+        "count": count,
+        "v": "5.26"
+    }
+    r = requests.get("https://api.vk.com/method/wall.get", params=params)
+    return r.json()               
 
-                              
-main()
+
+if __name__ == "__main__":
+    main()
