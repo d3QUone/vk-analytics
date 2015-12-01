@@ -53,3 +53,5 @@ coverage.xml
 docs/_build/
 
 output
+.idea
+_stat.txt
